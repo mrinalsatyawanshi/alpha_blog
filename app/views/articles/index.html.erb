@@ -1,0 +1,22 @@
+<h1>This is the Article index page</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+    <% 
+        @articles.each do |article_object|
+            %>
+        <tr>
+        <td> <%= article_object.title %> </td>
+        <td> <%= article_object.description %></td>
+        </tr>
+        <%
+        end
+        %>
+    </tbody>
+</table>
