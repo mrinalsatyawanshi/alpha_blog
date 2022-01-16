@@ -21,6 +21,7 @@ class ArticlesController < ApplicationController
             flash[:notice] = "Article created Successfully!!"
             redirect_to @articles
         else
+            # new way to write render
             render :new, status: :unprocessable_entity
         end
     end
@@ -33,5 +34,11 @@ class ArticlesController < ApplicationController
         else
             render :edit, status: :unprocessable_entity
         end
+    end
+
+    def destroy
+        @articles = Article.find(params[:id])
+        @articles.destroy
+        redirect_to articles_path
     end
 end
