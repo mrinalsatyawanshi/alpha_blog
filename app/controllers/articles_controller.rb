@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
+    before_action :set_article, only: [:show, :edit, :update, :destroy]
     def show
-        @article = Article.find(params[:id])
+      
     end
 
     def index
@@ -8,18 +9,18 @@ class ArticlesController < ApplicationController
     end
 
     def new
-        @articles = Article.new
+        @article = Article.new
     end
 
     def edit
-        @articles = Article.find(params[:id])
+    
     end
 
     def create
-        @articles = Article.new(params.require(:article).permit(:title, :description))
-        if @articles.save
+        @article = Article.new(article_params)
+        if @article.save
             flash[:notice] = "Article created Successfully!!"
-            redirect_to @articles
+            redirect_to @article
         else
             # new way to write render
             render :new, status: :unprocessable_entity
@@ -27,18 +28,27 @@ class ArticlesController < ApplicationController
     end
 
     def update
-        @articles = Article.find(params[:id])
-        if @articles.update(params.require(:article).permit(:title, :description))
+        if @article.update(article_params)
             flash[:notice] = "Article updated Successfully!!"
-            redirect_to @articles
+            redirect_to @article
         else
             render :edit, status: :unprocessable_entity
         end
     end
 
     def destroy
-        @articles = Article.find(params[:id])
-        @articles.destroy
+        
+        @article.destroy
         redirect_to articles_path
+    end
+
+    private
+
+    def set_article
+        @article = Article.find(params[:id])
+    end
+
+    def article_params
+        params.require(:article).permit(:title, :description)
     end
 end
